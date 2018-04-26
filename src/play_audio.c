@@ -15,7 +15,7 @@ int set_pcm_play(FILE *fp, WavHeader *wav_header)
     int frequency=wav_header->nSamplesPersec;
     int bit=wav_header->wBitsPerSample;
     int datablock=wav_header->wBlockAlign;
-    unsigned char ch[100]; //用来存储wav文件的头信息
+    //unsigned char ch[100]; //用来存储wav文件的头信息
 
 
 

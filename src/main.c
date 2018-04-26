@@ -1,6 +1,8 @@
-#include "ros/ros.h"
-#include "std_msgs/String.h"
-#include "asr_record/sr_order.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <unistd.h>
 
 #include "../include/msc/msp_cmn.h"
 #include "../include/msc/msp_errors.h"
@@ -10,7 +12,7 @@
 #include "../include/asr_record/play_audio.h"
 
 
-#define lgi_param_a "appid = ,engine_start = ivw,work_dir = .,ivw_res_path =fo|"
+#define lgi_param_a "appid = 5add9519,engine_start = ivw,work_dir = .,ivw_res_path =fo|"
 #define lgi_param_b concat(lgi_param_a, PACKAGE_PATH)
 const char *lgi_param = concat(lgi_param_b, "res/ivw/wakeupresource.jet"); //使用唤醒需要在此设置engine_start = ivw,ivw_res_path =fo|xxx/xx 启动唤醒引擎
 const char *ssb_param = "ivw_threshold=0:-20,sst=wakeup";
@@ -25,11 +27,6 @@ UserData asr_data;
 #define MAX_SIZE 100
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "asr_record");
-  ros::NodeHandle nh;
-  ros::Publisher chatter_pub = nh.advertise<asr_record::sr_order>("sr_order", 1000);
-  ros::Rate loop_rate(10);
-
   char current_absolute_path[MAX_SIZE];
   //获取当前程序绝对路径
   int cnt = readlink("/proc/self/exe", current_absolute_path, MAX_SIZE);
@@ -39,7 +36,6 @@ int main(int argc, char **argv)
 
 
   int ret = 0 ;
-  asr_record::sr_order order_send;
 
   ret = MSPLogin(NULL, NULL, lgi_param);
   if (MSP_SUCCESS != ret)
@@ -74,24 +70,18 @@ int main(int argc, char **argv)
       g_is_awaken_succeed = FALSE;
     }
     printf("%d:%d\n", g_is_order_publiced, g_order);
-    if(ros::ok() && g_is_order_publiced == FALSE){
+    if(g_is_order_publiced == FALSE){
       if(g_order==ORDER_BACK_TO_CHARGE){
         printf("%d\n", g_order);
-        play_wav((char*)"./src/awaken_asr/audios/back_to_charge.wav");        
+        play_wav((char*)concat(PACKAGE_PATH, "audios/back_to_charge.wav"));        
       }
       if(g_order == ORDER_FACE_DETECTION){
         printf("%d\n", g_order);
-        play_wav((char*)"./src/awaken_asr/audios/operating_face_rec.wav");
+        play_wav((char*)concat(PACKAGE_PATH, "audios/operating_face_rec.wav"));
       }
-      order_send.order = g_order;
-      chatter_pub.publish(order_send);
       g_is_order_publiced = TRUE;
 		}
     
-
-    ros::spinOnce();
-
-    //loop_rate.sleep();
   }
 exit:
   MSPLogout();
