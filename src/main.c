@@ -12,7 +12,7 @@
 #include "../include/asr_record/play_audio.h"
 
 
-#define lgi_param_a "appid = 5add9519,engine_start = ivw,work_dir = .,ivw_res_path =fo|"
+#define lgi_param_a "appid = 00000,engine_start = ivw,work_dir = .,ivw_res_path =fo|"
 #define lgi_param_b concat(lgi_param_a, PACKAGE_PATH)
 const char *lgi_param = concat(lgi_param_b, "res/ivw/wakeupresource.jet"); //使用唤醒需要在此设置engine_start = ivw,ivw_res_path =fo|xxx/xx 启动唤醒引擎
 const char *ssb_param = "ivw_threshold=0:-20,sst=wakeup";
