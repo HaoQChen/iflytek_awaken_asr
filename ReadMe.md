@@ -1,3 +1,5 @@
+Blog:https://blog.csdn.net/u013834525/article/details/80097253
+
 Tihs package use alsa to record voice and wait for awake, and then recognize order.
 My code is refer to iflytek's asr_record_sample and awaken_sample. For more infomation, please check through iflytek's reference.
 
