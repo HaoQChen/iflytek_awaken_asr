@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "asr_record");
   ros::NodeHandle nh;
-  ros::Publisher chatter_pub = nh.advertise<asr_record::sr_order>("sr_order", 1000);
+  ros::Publisher chatter_pub = nh.advertise<awaken_asr::sr_order>("sr_order", 1000);
   ros::Rate loop_rate(10);
 
   char current_absolute_path[MAX_SIZE];
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
 
   int ret = 0 ;
-  asr_record::sr_order order_send;
+  awaken_asr::sr_order order_send;
 
   ret = MSPLogin(NULL, NULL, lgi_param);
   if (MSP_SUCCESS != ret)
