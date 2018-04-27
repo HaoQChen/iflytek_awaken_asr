@@ -2,7 +2,7 @@
 #include "std_msgs/String.h"
 #include "awaken_asr/sr_order.h"
 
-void chatterCallback(const asr_record::sr_order order)
+void chatterCallback(const awaken_asr::sr_order order)
 {
   ROS_INFO("I heard: [%04x]\n", order.order);
 }
